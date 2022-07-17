@@ -19,7 +19,7 @@ function calculatorInput() {
                     activeSum = activeSum + buttonText
                 }
                 activeScreen.textContent = activeSum
-            } else if (buttonText == "clear"){
+            } else if (buttonText == "clear") {
                 operator = ""
                 activeSum = "0"
                 storedSum = ""
@@ -32,6 +32,14 @@ function calculatorInput() {
                 } else if (activeSum.length == 1) {
                     activeSum = "0"
                 }
+            } else if (buttonText == "*" && hasOperator == true || buttonText == "-" && hasOperator == true || buttonText == "/" && hasOperator == true || buttonText == "+" && hasOperator == true) {
+                const result = calculatorOperators(operator, activeSum, storedSum)
+                operator = buttonText
+                buttonText = "="
+                memoryScreen.innerText = result
+                storedSum =result
+                activeScreen.innerText = "0"
+                activeSum = ""
             } else if (buttonText == "=") {
                 const result = calculatorOperators(operator, activeSum, storedSum)
                 memoryScreen.innerText = result
@@ -45,6 +53,7 @@ function calculatorInput() {
                     activeSum = ""
                     memoryScreen.innerText = activeScreen.innerText + " " + operator
                     activeScreen.innerText = "0"
+                    hasOperator = true
                 } else { 
                     storedSum = memoryScreen.innerText
                     memoryScreen.innerHTML = memoryScreen.innerText + " " + operator
@@ -54,9 +63,6 @@ function calculatorInput() {
         })
     });
 }
-
-
-
 
 //calculates the sum
 function calculatorOperators(operator, activeSum, storedSum) {
